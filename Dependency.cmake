@@ -78,7 +78,7 @@ add_library(imgui
 )
 target_include_directories(imgui PRIVATE ${DEP_INCLUDE_DIR})
 add_dependencies(imgui ${DEP_LIST})
-set(DEP_INCLUDE_DIR ${DEP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui-${IMGUI_VERSION})
+set(DEP_INCLUDE_DIR ${DEP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/ImGui-${IMGUI_VERSION})
 set(DEP_LIST ${DEP_LIST} imgui)
 set(DEP_LIBS ${DEP_LIBS} imgui)
 
