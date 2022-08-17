@@ -79,6 +79,11 @@
 #define GLFW_HAS_GAMEPAD_API          (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3300) // 3.3+ glfwGetGamepadState() new api
 #define GLFW_HAS_GET_KEY_NAME         (GLFW_VERSION_MAJOR * 1000 + GLFW_VERSION_MINOR * 100 >= 3200) // 3.2+ glfwGetKeyName()
 
+#ifdef __EMSCRIPTEN__
+    #include <emscripten.h>
+    #include <emscripten/html5.h>
+#endif
+
 // GLFW data
 enum GlfwClientApi
 {
@@ -639,8 +644,13 @@ void ImGui_ImplGlfw_NewFrame()
     // Setup display size (every frame to accommodate for window resizing)
     int w, h;
     int display_w, display_h;
+#ifdef __EMSCRIPTEN__
+    emscripten_get_canvas_element_size("#canvas", &w, &h);
+    emscripten_get_canvas_element_size("#canvas", &display_w, &display_h);
+#else
     glfwGetWindowSize(bd->Window, &w, &h);
     glfwGetFramebufferSize(bd->Window, &display_w, &display_h);
+#endif
     io.DisplaySize = ImVec2((float)w, (float)h);
     if (w > 0 && h > 0)
         io.DisplayFramebufferScale = ImVec2((float)display_w / (float)w, (float)display_h / (float)h);

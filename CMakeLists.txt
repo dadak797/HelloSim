@@ -12,6 +12,8 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/GlfwOcctWindow.cpp  src/GlfwOcctWindow.h
     src/GlfwOcctView.cpp  src/GlfwOcctView.h
+    src/GlfwOccWindow.cpp  src/GlfwOccWindow.h
+    src/GlfwOccView.cpp  src/GlfwOccView.h
 )
 
 include(Dependency.cmake)
