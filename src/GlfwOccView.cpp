@@ -81,7 +81,7 @@ void GlfwOccView::initWindow()
     ImGui::StyleColorsLight();
     //ImGui::StyleColorsClassic();
     io.Fonts->AddFontFromFileTTF("resource/fonts/Consolas.ttf", 13.0f);
-
+	
 		//std::cout << "before ImGui_ImplGlfw_InitForOpenGL" << std::endl;
 
     ImGui_ImplGlfw_InitForOpenGL(hWnd->getGlfwWindow(), false);
@@ -274,14 +274,19 @@ void GlfwOccView::OnMouseButton(int button, int action, int mods)
 		if (m_view.IsNull()) { return; }
 
     const Graphic3d_Vec2i aPos = hWnd->CursorPosition();
-    if (action == GLFW_PRESS)
-    {
-        PressMouseButton(aPos, mouseButtonFromGlfw(button), keyFlagsFromGlfw(mods), false);
-    }
-    else
-    {
-        ReleaseMouseButton(aPos, mouseButtonFromGlfw(button), keyFlagsFromGlfw(mods), false);
-    }
+		ImGuiIO& io = ImGui::GetIO();
+		
+		if (io.WantCaptureMouse == false) {
+				if (action == GLFW_PRESS)
+				{
+						PressMouseButton(aPos, mouseButtonFromGlfw(button), keyFlagsFromGlfw(mods), false);
+				}
+				else
+				{
+						ReleaseMouseButton(aPos, mouseButtonFromGlfw(button), keyFlagsFromGlfw(mods), false);
+				}
+		}
+
 }
 
 void GlfwOccView::OnMouseMove(int thePosX, int thePosY)
@@ -298,6 +303,7 @@ void GlfwOccView::mainloop()
 	while (!glfwWindowShouldClose(window)) {
 			drawFrame();
 			glfwPollEvents();
+			//glfwWaitEvents();
 	}
 	
 
@@ -360,16 +366,16 @@ void GlfwOccView::drawFrame()
 			}
 			ImGui::End();
 
+			ImGui::ShowDemoWindow();
+
 			//std::cout << "imgui::end" << std::endl;
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-		m_GLcontext->SwapBuffers();
+		  m_GLcontext->SwapBuffers();
+			FlushViewEvents(mContext, m_view, true);
 
 		//std::cout << "swap buffer" << std::endl;
-
-		FlushViewEvents(mContext, m_view, true);
-
 		//std::cout << "FlushViewEvents" << std::endl;
 	}
 }

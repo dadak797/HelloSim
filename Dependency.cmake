@@ -75,6 +75,7 @@ add_library(imgui
     dependencies/ImGui-${IMGUI_VERSION}/imgui.cpp
     dependencies/ImGui-${IMGUI_VERSION}/imgui_impl_glfw.cpp
     dependencies/ImGui-${IMGUI_VERSION}/imgui_impl_opengl3.cpp
+    dependencies/ImGui-${IMGUI_VERSION}/imgui_demo.cpp
 )
 target_include_directories(imgui PRIVATE ${DEP_INCLUDE_DIR})
 add_dependencies(imgui ${DEP_LIST})
